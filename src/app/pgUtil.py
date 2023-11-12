@@ -62,6 +62,18 @@ class DatabaseUtil:
             print(f"Something has gone wrong while retrieving numbers: {e}")
             return []
     
+    def getNumbersByBlockDate(self, blockDate):
+        try:
+            self.connect()
+            query = f"SELECT * FROM spam_list WHERE block_date=TO_DATE('{blockDate}', 'YYYY-MM-DD');"
+            self.cursor.execute(query)
+            res = self.cursor.fetchall()
+            self.closeConnection()
+            return res
+        except Exception as e:
+            print(f"Something has gone wrong while retrieving numbers: {e}")
+            return []
+    
     def updateNumber(self, id, newNumber, newBlockDate, newAddress):
         try:
             self.connect()

@@ -2,16 +2,6 @@
 
 from app.pgUtil import DatabaseUtil as dbutil
 
-def listAll():
-    db = dbutil()
-    numbers = db.getNumbers()
-
-    instances = []
-    for row in numbers:
-        item = f"{row[0]} - {row[1]}"
-        instances.append(item)
-    return instances
-
 class SpamNumber:
     def __init__(self, id):
         self.id = id
