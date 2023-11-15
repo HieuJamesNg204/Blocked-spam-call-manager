@@ -73,6 +73,18 @@ class DatabaseUtil:
         except Exception as e:
             print(f"Something has gone wrong while retrieving numbers: {e}")
             return []
+        
+    def getNumbersByDateRange(self, startDate, endDate):
+        try:
+            self.connect()
+            query = f"SELECT * FROM spam_list\
+                WHERE block_date BETWEEN TO_DATE('{startDate}', 'YYYY-MM-DD') AND TO_DATE('{endDate}', 'YYYY-MM-DD');"
+            self.cursor.execute(query)
+            res = self.cursor.fetchall()
+            self.closeConnection()
+            return res
+        except Exception:
+            pass
     
     def updateNumber(self, id, newNumber, newBlockDate, newAddress):
         try:

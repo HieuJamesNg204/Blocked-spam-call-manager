@@ -34,6 +34,20 @@ def infoDisplay(mainWindow):
         else:
             listAllNumbers()
 
+    def listAllNumbersByDateRange():
+        start = startEntry.get()
+        end = endEntry.get()
+        if start and end:
+            instances = listByDateRange(start, end)
+            if instances:
+                clearList()
+                for instance in instances:
+                    blockedNumberListbox.insert("end", instance)
+            else:
+                messagebox.showerror("Error", "End date must be after start date")
+        else:
+            messagebox.showerror("Error", "Please enter the range if you want to list numbers by date range")
+
     def displayInfo():
         numberId = searchEntry.get()
         if numberId.isdigit():
@@ -47,6 +61,15 @@ def infoDisplay(mainWindow):
                 messagebox.showerror("Error", f"Phone number with ID {numberId} could not be found")
         else:
             messagebox.showerror("Error", f"Phone number ID is not valid")
+
+    numberInfoFrame = LabelFrame(form, text="Number Information", font=textLabel)
+    numberInfoFrame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+
+    numberLabel = Label(numberInfoFrame, text="Number:", font=textLabel)
+    numberLabel.grid(row=0, column=0, padx=10, pady=5)
+
+    infoLabel = Label(numberInfoFrame, text="Info:", font=textLabel)
+    infoLabel.grid(row=1, column=0, padx=10, pady=5)
 
     searchLabel = Label(form, text="Search for a number with id:", font=textLabel)
     searchLabel.grid(row=1, column=0, padx=10, pady=(0, 5))
@@ -66,11 +89,20 @@ def infoDisplay(mainWindow):
     listAllButton = Button(form, text="List All", font=textLabel, command=listAllNumbersByDate)
     listAllButton.grid(row=3, column=1, padx=10, pady=(0, 10))
 
-    numberInfoFrame = LabelFrame(form, text="Number Information", font=textLabel)
-    numberInfoFrame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+    dateRangeLabel = Label(form, text="Enter the date range to list numbers\nFormat: yyyy-mm-dd", font=textLabel)
+    dateRangeLabel.grid(row=4, columnspan=2, padx=10, pady=(0, 5))
 
-    numberLabel = Label(numberInfoFrame, text="Number:", font=textLabel)
-    numberLabel.grid(row=0, column=0, padx=10, pady=5)
+    startLabel = Label(form, text="Start date", font=textLabel)
+    startLabel.grid(row=5, column=0, padx=10, pady=(0, 5))
 
-    infoLabel = Label(numberInfoFrame, text="Info:", font=textLabel)
-    infoLabel.grid(row=1, column=0, padx=10, pady=5)
+    endLabel = Label(form, text="End date", font=textLabel)
+    endLabel.grid(row=5, column=1, padx=10, pady=(0, 5))
+
+    startEntry = Entry(form, font=textLabel)
+    startEntry.grid(row=6, column=0, padx=10, pady=(0, 10))
+
+    endEntry = Entry(form, font=textLabel)
+    endEntry.grid(row=6, column=1, padx=10, pady=(0, 10))
+
+    listByDateButton = Button(form, text="List by given range", font=textLabel, command=listAllNumbersByDateRange)
+    listByDateButton.grid(row=7, columnspan=2, padx=10, pady=(0, 10))

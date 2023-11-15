@@ -1,24 +1,25 @@
-import tkinter as tk
+from datetime import datetime
 
-def clear_listbox():
-    listbox.delete(0, tk.END)
+def compare_dates(date_str1, date_str2):
+    try:
+        # Parse the date strings into datetime objects
+        date1 = datetime.strptime(date_str1, '%Y-%m-%d')
+        date2 = datetime.strptime(date_str2, '%Y-%m-%d')
 
-# Create the main window
-window = tk.Tk()
-window.title("Listbox Example")
+        # Compare the dates
+        if date1 < date2:
+            return f"{date_str1} is before {date_str2}"
+        elif date1 > date2:
+            return f"{date_str1} is after {date_str2}"
+        else:
+            return f"{date_str1} is the same as {date_str2}"
 
-# Create a Listbox and add some items
-listbox = tk.Listbox(window)
-items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
-for item in items:
-    listbox.insert(tk.END, item)
+    except ValueError:
+        return "Invalid date format. Please use 'YYYY-MM-DD'."
 
-# Create a Clear button
-clear_button = tk.Button(window, text="Clear", command=clear_listbox)
+# Example usage
+date_str1 = input("Enter the first date (YYYY-MM-DD): ")
+date_str2 = input("Enter the second date (YYYY-MM-DD): ")
 
-# Pack the Listbox and Clear button into the window
-listbox.pack(pady=10)
-clear_button.pack(pady=10)
-
-# Run the Tkinter event loop
-window.mainloop()
+result = compare_dates(date_str1, date_str2)
+print(result)
